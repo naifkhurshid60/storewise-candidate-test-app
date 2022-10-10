@@ -1,42 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script
-      src="https://unpkg.com/react@18/umd/react.development.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-      crossorigin
-    ></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body>
-    <div id="mydiv"></div>
 
-    <script type="text/babel">
-      const allData = Array.from({ length: 40 }, () =>
-        Math.floor(Math.random() * 40)
-      );
-      function App() {
-        const [currentList, setCurrentList] = React.useState(allData);
-        return (
-          <>
-            <div style={{ display: "flex" }}>
-              <button style={{ width: "100px", height: "100px" }}>Sort</button>
-              <button style={{ width: "100px", height: "100px" }}>
-                Filter Odd Numbers
-              </button>
-            </div>
-            {currentList.map((item, index) => (
-              <div key={index}> {item.toString()} </div>
-            ))}
-          </>
-        );
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="mydiv"></div>
+
+  <script type="text/babel">
+    const allData = Array.from({ length: 40 }, () =>
+      Math.floor(Math.random() * 40)
+    );
+    function App() {
+      const [currentList, setCurrentList] = React.useState(allData);
+      const handleSort = () => {
+        let list1 = currentList;
+        // console.log(currentList);
+        // console.log(allData);
+        list1 = list1.sort((a, b) => a - b);
+        console.log(list1);
+        setCurrentList(list1);
+
+
+      }
+      const handleOdd = () => {
+        //console.log('hey')
+        let list2 = [];
+        for (let i = 0; i < 40; i++) {
+          if (currentList[i] % 2 != 0) {
+            list2.push(currentList[i]);
+          }
+
+        }
+        console.log(list2)
+        setCurrentList(list2);
+
+
+      }
+      const handleOnChange = (event) => {
+        setCurrentList(event.target.value)
+
       }
 
-      const root = ReactDOM.createRoot(document.getElementById("mydiv"));
-      root.render(<App />);
-    </script>
-  </body>
+
+      return (
+        <>
+          <div style={{ display: "flex" }}>
+            <button style={{ width: "100px", height: "100px" }} onClick={handleSort} >Sort</button>
+            <button style={{ width: "100px", height: "100px" }} onClick={handleOdd}>
+              Filter Odd Numbers
+            </button>
+          </div>
+          <div className="change" onChange={handleOnChange} value={currentList}>
+            {currentList.map((item, index) => (
+
+              <div key={index}> {item.toString()} </div>
+
+            ))}
+          </div>
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("mydiv"));
+    root.render(<App />);
+  </script>
+</body>
+
 </html>
